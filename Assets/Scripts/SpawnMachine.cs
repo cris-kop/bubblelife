@@ -46,7 +46,7 @@ public class SpawnMachine : MonoBehaviour
         spawnPos.y = spawnY;
         spawnPos.z = Random.Range(minZ, maxZ);
 
-        Debug.Log(spawnPos);
+        //Debug.Log(spawnPos);
         var pickup = Instantiate(pickupPrefab, spawnPos, Quaternion.identity);
         var pickupMovers = pickup.GetComponents<SimpleMover_Base>();
         foreach (var mover in pickupMovers)

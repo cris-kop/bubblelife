@@ -21,11 +21,18 @@ public class GameController : MonoBehaviour
     public int startHealth = 3;
     public Text scoreText;
     public Text healthText;
+    public Text bubbleOverFlowText;
     public Text timerText;
 
     public int startDurationInLight;
     public int durationNeededInDark;
     private float remainDurationInWorld;
+    
+    public float maxBubblePower = 2.0f;
+    public float bubbleOverflowControl = 1.0f;
+    private int currBubbleOverflow = 0;
+    private float lastPickup;
+    private int pickupsCollected = 0;
 
     public int scorePerPickup = 50;
     public float timeAddedPerPickup = 1.0f;
@@ -64,13 +71,16 @@ public class GameController : MonoBehaviour
             case worldMode.dark:
                 currWorldMode = worldMode.light;
                 remainDurationInWorld = startDurationInLight;
+                bubbleOverFlowText.gameObject.SetActive(true);
+                lastPickup = 0;
                 break;
             case worldMode.light:
                 currWorldMode = worldMode.dark;
                 remainDurationInWorld = durationNeededInDark;
+                bubbleOverFlowText.gameObject.SetActive(false);
                 break;
         }
-
+        pickupsCollected = 0;
 
         player.GetComponent<Player>().Reset();
         if (initial)
@@ -93,10 +103,11 @@ public class GameController : MonoBehaviour
         return currWorldMode;
     }
 
-    public void PickupCollected(GameObject pickup)
+    public void PickupCollected(GameObject pickup, float currBubblePower)
     {
         spawnMachine.DeleteObject(pickup);
         FindFirstObjectByType<AudioManager>().PlayHitSound();
+        pickupsCollected++;
 
         switch (currWorldMode)
         {
@@ -104,6 +115,23 @@ public class GameController : MonoBehaviour
                 score += scorePerPickup;
                 UpdateScoreText();
                 remainDurationInWorld += timeAddedPerPickup;
+
+                Debug.Log("Pickups collected:" + pickupsCollected);
+
+                currBubbleOverflow += (int)((Time.time - lastPickup) * bubbleOverflowControl * pickupsCollected);
+
+                // 1 * 1 * 1 = 1
+                // 1 * 1 * 2 = 2
+
+                UpdateBubbleOverflowText();
+
+                if(currBubblePower > maxBubblePower || currBubbleOverflow >= 100)
+                {
+                    remainDurationInWorld = 0.0f;
+                }
+                lastPickup = Time.time;
+                pickupsCollected++;
+
                 break;
             case worldMode.dark:
                 health -= damagePerHit;
@@ -119,6 +147,11 @@ public class GameController : MonoBehaviour
     public void UpdateHealthText()
     {
         healthText.text = "Health: " + health;
+    }
+
+    public void UpdateBubbleOverflowText()
+    {
+        bubbleOverFlowText.text = "Overflow: " + currBubbleOverflow + "%";
     }
 
     private void CheckPlayerDied()

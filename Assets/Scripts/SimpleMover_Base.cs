@@ -16,7 +16,7 @@ public class SimpleMover_Base : MonoBehaviour
 
     public void Setup(Vector3 spawnPos, Vector3 dir)
     {
-        Debug.Log("Setup");
+        //Debug.Log("Setup");
         _dir = dir.normalized;
         _startPos = spawnPos;
         _startTime = Time.time;
