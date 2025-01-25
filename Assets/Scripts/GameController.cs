@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour
     };
 
     public Button _startGameButton;
-    public GameObject player;
+    public Player player;
     public Vector3 playerStartPosition = new Vector3(0.0f, 1.0f, 0.0f);
 
     private worldMode currWorldMode = worldMode.light; // used by effect, make sure its starts correct
@@ -72,10 +72,14 @@ public class GameController : MonoBehaviour
         }
 
 
-        player.GetComponent<Player>().Reset();
+        player.Reset();
         if (initial)
         {
             player.transform.position = playerStartPosition;
+        }
+        else
+        {
+            player.PopBubble();
         }
 
         //player.GetComponent<Player>().SwitchBubbleState();
