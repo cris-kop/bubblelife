@@ -3,7 +3,7 @@ using System;
 
 public class DualWorldObject : MonoBehaviour
 {
-    private GameController gameController;
+    protected GameController gameController;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected virtual void Start()
@@ -21,5 +21,10 @@ public class DualWorldObject : MonoBehaviour
     protected virtual void worldHasChanged(GameController.worldMode currentWorldMode)
     {
         // base function, inherited class function per 'type'
+    }
+
+    void OnDestroy()
+    {
+        gameController.OnWorldModeChanged -= worldHasChanged;
     }
 }

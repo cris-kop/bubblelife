@@ -329,7 +329,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &429012875
 Transform:
   m_ObjectHideFlags: 0
@@ -1001,6 +1001,7 @@ MonoBehaviour:
   timeAddedPerPickup: 0.5
   damagePerHit: 1
   retryButton: {fileID: 1148178013}
+  spawnMachine: {fileID: 1502257655}
 --- !u!4 &995136124
 Transform:
   m_ObjectHideFlags: 0
@@ -1250,6 +1251,58 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3035440504548879867, guid: 42b5a9f7a1f9ce34faf01183ab6fb437, type: 3}
   m_PrefabInstance: {fileID: 841529396}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1502257654
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1502257656}
+  - component: {fileID: 1502257655}
+  m_Layer: 0
+  m_Name: SpawnMachine
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1502257655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1502257654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 289a17193d84a8b4cacaa14e773b2b44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameController: {fileID: 995136123}
+  pickupPrefab: {fileID: 4972840625236919091, guid: 42b5a9f7a1f9ce34faf01183ab6fb437, type: 3}
+  maxObjects: 6
+  minZ: -5
+  maxZ: 5
+  minX: -9
+  maxX: 9
+  spawnY: 2
+--- !u!4 &1502257656
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1502257654}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1645951138
 GameObject:
   m_ObjectHideFlags: 0
@@ -1476,7 +1529,7 @@ MonoBehaviour:
   startBubblePower: 2
   bubbleModel: {fileID: 1141681675}
   gameController: {fileID: 995136123}
-  bubbleIncreaser: 0.5
+  bubbleIncreaser: 0.2
 --- !u!1001 &1854720887
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1777,3 +1830,4 @@ SceneRoots:
   - {fileID: 429012875}
   - {fileID: 54246945}
   - {fileID: 1645951141}
+  - {fileID: 1502257656}

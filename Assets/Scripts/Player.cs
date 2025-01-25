@@ -39,16 +39,15 @@ public class Player : MonoBehaviour
 
         foreach(var collider in hitColliders)
         {
-            collider.gameObject.SetActive(false);
-
             if (gameController.GetCurrentWorld() == GameController.worldMode.light)
             {
-                gameController.PickupCollected();
+                gameController.PickupCollected(collider.gameObject);
             }
             else
             {
                 gameController.TakeDamage();
             }
+            collider.gameObject.SetActive(false);
             currentBubblePower += bubbleIncreaser;
         }
     }

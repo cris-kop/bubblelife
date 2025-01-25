@@ -10,6 +10,7 @@ public class DualGameobject : DualWorldObject
     protected override void Start()
     {
         base.Start();
+        worldHasChanged(gameController.GetCurrentWorld());
     }
 
     // Update is called once per frame

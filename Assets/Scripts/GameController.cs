@@ -28,15 +28,20 @@ public class GameController : MonoBehaviour
     public int startDurationInLight;
     public int durationNeededInDark;
     private float remainDurationInWorld;
-      
+    
     public int scorePerPickup = 50;
     public float timeAddedPerPickup = 1.0f;
     
     public int damagePerHit = 1;
 
+    public float levelZmin = -10.0f;
+
     public Button retryButton;
     private bool gameActive = false;
     private int currLevel = 0;
+
+    // Solve with dispatch/msg listener?
+    public SpawnMachine spawnMachine;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -74,7 +79,7 @@ public class GameController : MonoBehaviour
         }
         player.GetComponent<Player>().SwitchBubbleState();
         OnWorldModeChanged.Invoke(currWorldMode);
-
+        spawnMachine.Reset();
         ++currLevel;
     }
     public worldMode GetCurrentWorld()
@@ -82,10 +87,12 @@ public class GameController : MonoBehaviour
         return currWorldMode;
     }
 
-    public void PickupCollected()
+    public void PickupCollected(GameObject pObject)
     {
         score = score + scorePerPickup;
         UpdateScoreText();
+
+        spawnMachine.DeleteObject(pObject);
         remainDurationInWorld += timeAddedPerPickup;
     }
 
@@ -135,6 +142,8 @@ public class GameController : MonoBehaviour
 
         worldStartTime = Time.time;
         remainDurationInWorld = startDurationInLight;
+
+        spawnMachine.Reset();
     }
 
     void UpdateTimers()
