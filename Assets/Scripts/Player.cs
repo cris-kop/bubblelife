@@ -38,6 +38,7 @@ public class Player : MonoBehaviour
 
         foreach (var collider in hitColliders)
         {
+            Debug.Log("hit at " + collider.transform.position);
             gameController.PickupCollected(collider.gameObject);
             collider.gameObject.SetActive(false);
             currentBubblePower += bubbleIncreaser;

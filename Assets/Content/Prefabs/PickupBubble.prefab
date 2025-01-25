@@ -215,6 +215,8 @@ GameObject:
   - component: {fileID: 3035440504548879867}
   - component: {fileID: 3425212962249927315}
   - component: {fileID: -6307676747737780989}
+  - component: {fileID: 7210373359032985067}
+  - component: {fileID: 5014904386552548414}
   m_Layer: 0
   m_Name: PickupBubble
   m_TagString: Untagged
@@ -272,6 +274,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f36fe35d414eef438b9c3f99fdc8546, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7210373359032985067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4972840625236919091}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 757d9a343a7328244a1065ee6cd54b86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSpeed: 1
+  maxSpeed: 3
+--- !u!114 &5014904386552548414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4972840625236919091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b570287d60d38e4c8af6146a4c6fd44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSpeed: 2
+  maxSpeed: 4
+  frequency: 0.2
+  radius: 1
 --- !u!1 &9091999887839975427
 GameObject:
   m_ObjectHideFlags: 0

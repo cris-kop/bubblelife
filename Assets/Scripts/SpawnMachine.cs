@@ -46,7 +46,15 @@ public class SpawnMachine : MonoBehaviour
         spawnPos.y = spawnY;
         spawnPos.z = Random.Range(minZ, maxZ);
 
-        objectsList.Add((GameObject)Instantiate(pickupPrefab, spawnPos, Quaternion.identity));
+        Debug.Log(spawnPos);
+        var pickup = Instantiate(pickupPrefab, spawnPos, Quaternion.identity);
+        var pickupMovers = pickup.GetComponents<SimpleMover_Base>();
+        foreach (var mover in pickupMovers)
+        {
+            mover.Setup(spawnPos, Vector3.back);
+        }
+
+        objectsList.Add(pickup);
     }
 
     // Reset the spawner

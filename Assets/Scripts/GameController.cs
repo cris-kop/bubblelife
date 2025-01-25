@@ -38,12 +38,6 @@ public class GameController : MonoBehaviour
     private bool gameActive = false;
     private int currLevel = 0;
 
-    // Sound
-    public AudioSource musicLightWorld;
-    public AudioSource musicDarkWorld;
-    public AudioSource hitLightWorldSound;
-    public AudioSource hitDarkWorldSound;
-
     // Solve with dispatch/msg listener?
     public SpawnMachine spawnMachine;
 
@@ -70,14 +64,10 @@ public class GameController : MonoBehaviour
             case worldMode.dark:
                 currWorldMode = worldMode.light;
                 remainDurationInWorld = startDurationInLight;
-                musicDarkWorld.Stop();
-                musicLightWorld.Play();
                 break;
             case worldMode.light:
                 currWorldMode = worldMode.dark;
                 remainDurationInWorld = durationNeededInDark;
-                musicLightWorld.Stop();
-                musicDarkWorld.Play();
                 break;
         }
 
@@ -106,6 +96,7 @@ public class GameController : MonoBehaviour
     public void PickupCollected(GameObject pickup)
     {
         spawnMachine.DeleteObject(pickup);
+        FindFirstObjectByType<AudioManager>().PlayHitSound();
 
         switch (currWorldMode)
         {
@@ -113,12 +104,10 @@ public class GameController : MonoBehaviour
                 score += scorePerPickup;
                 UpdateScoreText();
                 remainDurationInWorld += timeAddedPerPickup;
-                hitLightWorldSound.Play();
                 break;
             case worldMode.dark:
                 health -= damagePerHit;
                 UpdateHealthText();
-                hitDarkWorldSound.Play();
                 break;
         }
     }
