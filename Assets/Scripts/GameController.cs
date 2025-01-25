@@ -29,11 +29,9 @@ public class GameController : MonoBehaviour
     public int durationNeededInDark;
     private float remainDurationInWorld;
       
-    public int pickupsNeeded = 3;
     public int scorePerPickup = 50;
     public float timeAddedPerPickup = 1.0f;
-    private int pickupCount = 0;
-
+    
     public int damagePerHit = 1;
 
     public Button retryButton;
@@ -58,13 +56,6 @@ public class GameController : MonoBehaviour
 
         if (gameActive)
         {
-            // Check if the world needs switching?
-            if (pickupCount == pickupsNeeded)
-            {
-                player.transform.position = playerStartPosition;
-                SwapWorldMode();
-            }
-
             CheckPlayerDied();
             UpdateTimers();
         }
@@ -82,8 +73,6 @@ public class GameController : MonoBehaviour
                 break;
         }
         player.GetComponent<Player>().SwitchBubbleState();
-        pickupCount = 0;
-
         OnWorldModeChanged.Invoke(currWorldMode);
 
         ++currLevel;
@@ -95,7 +84,6 @@ public class GameController : MonoBehaviour
 
     public void PickupCollected()
     {
-        pickupCount++;
         score = score + scorePerPickup;
         UpdateScoreText();
         remainDurationInWorld += timeAddedPerPickup;
