@@ -7,8 +7,6 @@ public class SpawnMachine : MonoBehaviour
     public GameObject pickupPrefab;
 
     public int maxObjects = 10;
-    private int currObjects = 0;
-
     // Spawning region
     public float minZ = -0.1f;
     public float maxZ = 0.1f;
@@ -24,16 +22,16 @@ public class SpawnMachine : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        CleanUp();       
+        CleanUpOutsideScreen();
         if (gameController.IsGameActive())
         {
-            if (currObjects < maxObjects)
+            if (objectsList.Count < maxObjects)
             {
                 SpawnObject();
             }
@@ -49,21 +47,19 @@ public class SpawnMachine : MonoBehaviour
         spawnPos.z = Random.Range(minZ, maxZ);
 
         objectsList.Add((GameObject)Instantiate(pickupPrefab, spawnPos, Quaternion.identity));
-        currObjects++;
     }
 
     // Reset the spawner
-    public void Reset()
+    public void DeleteAll()
     {
-        currObjects = 0;
-
-        foreach(var element in objectsList)
+        foreach (var element in objectsList)
         {
             if (element)
             {
                 Destroy(element);
             }
         }
+
         objectsList.Clear();
     }
 
@@ -71,21 +67,21 @@ public class SpawnMachine : MonoBehaviour
     {
         objectsList.Remove(objectToDelete);
         Destroy(objectToDelete);
-        currObjects--;
     }
 
-    private void CleanUp()
+    private void CleanUpOutsideScreen()
     {
-        foreach (var element in objectsList)
+        for (int i = objectsList.Count - 1; i > -1; i--) // go through in reverse order so tht removeing the element from the list while iterating over it causes no issues, the i remains valid for each step
         {
+            var element = objectsList[i];
             if (element)
             {
-                if (element.GetComponent<Transform>().position.z < gameController.levelZmin)
+                if (element.transform.position.z < gameController.levelZmin)
                 {
-                    Destroy(element);
+                    DeleteObject(element);
                 }
             }
         }
     }
 
-    }
+}

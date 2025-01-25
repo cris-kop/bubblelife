@@ -11,6 +11,9 @@ public class WorldTransitionEffect : MonoBehaviour
 
     private GameController.worldMode _currentMode;
     private float _switchTimeStamp;
+    private Vector3 _transitionSpot;
+    private bool forceInstantSwap = true;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -19,10 +22,6 @@ public class WorldTransitionEffect : MonoBehaviour
         if (controller != null)
         {
             controller.OnWorldModeChanged += transitionToWorld;
-        }
-        else
-        {
-            transitionToWorld(GameController.worldMode.light);
         }
 
         _lightWorldCam.targetTexture = new RenderTexture(Screen.width, Screen.height, 16);
@@ -45,13 +44,15 @@ public class WorldTransitionEffect : MonoBehaviour
 
     private void transitionToWorld(GameController.worldMode currentMode)
     {
+        forceInstantSwap = FindFirstObjectByType<GameController>().GetCurrentLevel() == 1;
+
         _currentMode = currentMode;
         _switchTimeStamp = Time.time;
+        _transitionSpot = _lightWorldCam.WorldToViewportPoint(_player2.transform.position);
     }
 
     void OnRenderImage(RenderTexture src, RenderTexture dest)
     {
-
 
         // _lightWorldCam.targetTexture
 
@@ -59,11 +60,12 @@ public class WorldTransitionEffect : MonoBehaviour
 
         var timePassed = Time.time - _switchTimeStamp;
         var progress = Mathf.Clamp01(timePassed / _transitionDuration);
+
+        if (forceInstantSwap)
+            progress = 1;
+
         _transitionMat.SetFloat("_Progress", progress);
         _transitionMat.SetFloat("_AspectRatio", (float)Screen.width / Screen.height);
-
-
-        var center = _lightWorldCam.WorldToViewportPoint(_player2.transform.position);
 
         _transitionMat.SetFloat("_Light", _currentMode == GameController.worldMode.light ? 1 : 0);
 
@@ -71,8 +73,7 @@ public class WorldTransitionEffect : MonoBehaviour
         _transitionMat.SetTexture("_FromTex", from);
         var to = _currentMode == GameController.worldMode.light ? _lightWorldCam.targetTexture : _darkWorldCam.targetTexture;
         _transitionMat.SetTexture("_ToTex", to);
-        Debug.Log(center);
-        _transitionMat.SetVector("_Center", new Vector4(center.x, center.y, 0, 0));
+        _transitionMat.SetVector("_Center", new Vector4(_transitionSpot.x, _transitionSpot.y, 0, 0));
 
         Graphics.Blit(src, dest, _transitionMat);
 

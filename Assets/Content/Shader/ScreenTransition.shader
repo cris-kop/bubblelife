@@ -4,6 +4,7 @@ Shader "ScreenTransition"
     {
         _MainTex ("Texture", 2D) = "white" {}
         _Glow ("Glow", Color) = (1,1,1,1)
+        _TransitionRange("_TransitionRange", Float) = 0.05
 
     }
     SubShader
@@ -46,7 +47,7 @@ Shader "ScreenTransition"
             float _Progress;
             float4 _Center;
             fixed4 _Glow;
-            float _TargetIsLight;
+            float _TransitionRange;
 
             float _AspectRatio;
 
@@ -62,7 +63,7 @@ Shader "ScreenTransition"
 
                 float progress = pow(_Progress, 1.5);
 
-                float range = 0.1;
+                float range = _TransitionRange;
                 float min = 0.0 + progress * 2;
                 float max = min + range;
                 float fade = smoothstep(min, max, distanceFromPlayer);

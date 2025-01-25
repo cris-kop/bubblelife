@@ -4,7 +4,8 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     [Header("setupValues")]
-    public float startBubblePower = 2.0f;
+    public float startBubblePower = 1f;
+    public float BubblePowerToVisualRatio = 4f;
 
     [Header("references")]
     public GameObject bubbleModel;
@@ -24,42 +25,40 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameController.IsGameActive())
-        {
-            var size = currentBubblePower;
-            bubbleModel.transform.localScale = Vector3.one * size;
+        if (gameController.IsGameActive() == false)
+            return;
 
-            CollisionDetection(size * 0.5f);
-        }
+        UpdateVisuals();
+        CollisionDetection(currentBubblePower);
     }
 
     private void CollisionDetection(float size)
     {
         var hitColliders = Physics.OverlapSphere(transform.position, size);
 
-        foreach(var collider in hitColliders)
+        foreach (var collider in hitColliders)
         {
-            if (gameController.GetCurrentWorld() == GameController.worldMode.light)
-            {
-                gameController.PickupCollected(collider.gameObject);
-            }
-            else
-            {
-                gameController.TakeDamage();
-            }
+            gameController.PickupCollected(collider.gameObject);
             collider.gameObject.SetActive(false);
             currentBubblePower += bubbleIncreaser;
         }
     }
 
+    private void UpdateVisuals()
+    {
+        bubbleModel.transform.localScale = Vector3.one * currentBubblePower * BubblePowerToVisualRatio;
+    }
+
     public void Reset()
     {
         currentBubblePower = startBubblePower;
-        bubbleModel.transform.localScale = Vector3.one * currentBubblePower;
+        SwitchBubbleState();
+        UpdateVisuals();
     }
-    public void SwitchBubbleState()
+
+    private void SwitchBubbleState()
     {
-        if(gameController.GetCurrentWorld() == GameController.worldMode.light)
+        if (gameController.GetCurrentWorld() == GameController.worldMode.light)
         {
             bubbleModel.SetActive(true);
         }
@@ -67,6 +66,19 @@ public class Player : MonoBehaviour
         {
             bubbleModel.SetActive(false);
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        var originalMatrix = Gizmos.matrix;
+
+        Gizmos.matrix = transform.localToWorldMatrix;
+        var pos = Vector3.zero;
+
+        Gizmos.DrawWireSphere(pos, currentBubblePower);
+
+        Gizmos.matrix = originalMatrix;
     }
 
 }

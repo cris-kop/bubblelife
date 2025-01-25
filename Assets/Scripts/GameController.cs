@@ -9,12 +9,13 @@ public class GameController : MonoBehaviour
         light, dark
     };
 
+    public Button _startGameButton;
     public GameObject player;
     public Vector3 playerStartPosition = new Vector3(0.0f, 1.0f, 0.0f);
 
-    private worldMode currWorldMode;
+    private worldMode currWorldMode = worldMode.light; // used by effect, make sure its starts correct
     public Action<worldMode> OnWorldModeChanged;
-    
+
     private int score = 0;
     private int health = 3;
     public int startHealth = 3;
@@ -22,14 +23,13 @@ public class GameController : MonoBehaviour
     public Text healthText;
     public Text timerText;
 
-    private float worldStartTime = 0;
     public int startDurationInLight;
     public int durationNeededInDark;
     private float remainDurationInWorld;
-    
+
     public int scorePerPickup = 50;
     public float timeAddedPerPickup = 1.0f;
-    
+
     public int damagePerHit = 1;
 
     public float levelZmin = -10.0f;
@@ -50,7 +50,7 @@ public class GameController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        _startGameButton.onClick.AddListener(StartGame);
     }
 
     // Update is called once per frame
@@ -63,54 +63,64 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void SwapWorldMode()
+    private void SwapWorldMode(bool initial)
     {
-        switch(currWorldMode)
+        switch (currWorldMode)
         {
-            case (worldMode.dark):
+            case worldMode.dark:
                 currWorldMode = worldMode.light;
+                remainDurationInWorld = startDurationInLight;
                 musicDarkWorld.Stop();
                 musicLightWorld.Play();
                 break;
-            case (worldMode.light):
+            case worldMode.light:
                 currWorldMode = worldMode.dark;
+                remainDurationInWorld = durationNeededInDark;
                 musicLightWorld.Stop();
                 musicDarkWorld.Play();
                 break;
         }
-        player.GetComponent<Player>().SwitchBubbleState();
+
+
+        player.GetComponent<Player>().Reset();
+        if (initial)
+        {
+            player.transform.position = playerStartPosition;
+        }
+
+        //player.GetComponent<Player>().SwitchBubbleState();
+        spawnMachine.DeleteAll();
+
+        if (initial == false)
+        {
+            currLevel++;
+        }
+
         OnWorldModeChanged.Invoke(currWorldMode);
-        spawnMachine.Reset();
-        ++currLevel;
     }
     public worldMode GetCurrentWorld()
     {
         return currWorldMode;
     }
 
-    public void PickupCollected(GameObject pObject)
+    public void PickupCollected(GameObject pickup)
     {
-        score = score + scorePerPickup;
-        UpdateScoreText();
+        spawnMachine.DeleteObject(pickup);
 
-        spawnMachine.DeleteObject(pObject);
-        remainDurationInWorld += timeAddedPerPickup;
-
-        switch(currWorldMode)
+        switch (currWorldMode)
         {
-            case (worldMode.light):
+            case worldMode.light:
+                score += scorePerPickup;
+                UpdateScoreText();
+                remainDurationInWorld += timeAddedPerPickup;
                 hitLightWorldSound.Play();
                 break;
-            case (worldMode.dark):
+            case worldMode.dark:
+                health -= damagePerHit;
+                UpdateHealthText();
                 hitDarkWorldSound.Play();
                 break;
         }
-    }
-
-    public void TakeDamage()
-    {
-        health = health - damagePerHit;
-        UpdateHealthText();
     }
 
     public void UpdateScoreText()
@@ -124,7 +134,7 @@ public class GameController : MonoBehaviour
 
     private void CheckPlayerDied()
     {
-        if(health <= 0)
+        if (health <= 0)
         {
             gameActive = false;
             retryButton.gameObject.SetActive(true);
@@ -139,46 +149,35 @@ public class GameController : MonoBehaviour
     {
         score = 0;
         health = startHealth;
-        currWorldMode = worldMode.dark;
-        SwapWorldMode();
-
-        retryButton.gameObject.SetActive(false);
-        UpdateHealthText();
-        UpdateScoreText();
-        player.GetComponent<Player>().Reset();
-        player.transform.position = playerStartPosition;
-
         gameActive = true;
         currLevel = 1;
 
-        worldStartTime = Time.time;
-        remainDurationInWorld = startDurationInLight;
+        retryButton.gameObject.SetActive(false);
 
-        spawnMachine.Reset();
+        UpdateHealthText();
+        UpdateScoreText();
+
+        currWorldMode = worldMode.dark;
+        SwapWorldMode(true);
     }
 
     void UpdateTimers()
     {
-        int currTime = (int)Time.time;
         remainDurationInWorld -= Time.deltaTime;
 
         int tDuration = (int)remainDurationInWorld;
         timerText.text = tDuration.ToString();
 
-        if(remainDurationInWorld <= 0)
+        if (remainDurationInWorld <= 0)
         {
-            SwapWorldMode();
-            player.GetComponent<Player>().Reset();
-            player.transform.position = playerStartPosition;
-
-            worldStartTime = currTime;
+            SwapWorldMode(false);
 
             switch (currWorldMode)
             {
-                case (worldMode.dark):
+                case worldMode.dark:
                     remainDurationInWorld = durationNeededInDark;
                     break;
-                case (worldMode.light):
+                case worldMode.light:
                     remainDurationInWorld = startDurationInLight;
                     break;
             }
