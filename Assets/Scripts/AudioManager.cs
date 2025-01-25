@@ -5,15 +5,16 @@ public class AudioManager : MonoBehaviour
 {
     // Sound
     [Header("prefabs")]
-    public AudioSource effectPrefab;
+    [SerializeField] private AudioSource effectPrefab;
 
     [Header("clips")]
-    public AudioClip hitLightWorld;
-    public AudioClip hitDarkWorld;
+    [SerializeField] private AudioClip hitLightWorld;
+    [SerializeField] private AudioClip hitDarkWorld;
+    [SerializeField] private AudioClip popSFX;
 
     [Header("permanent")]
-    public AudioSource musicLight;
-    public AudioSource musicDark;
+    [SerializeField] private AudioSource musicLight;
+    [SerializeField] private AudioSource musicDark;
 
     private GameController gameController;
 
@@ -66,6 +67,13 @@ public class AudioManager : MonoBehaviour
                 break;
         }
 
+        effect.Play();
+    }
+
+    public void PlayPop()
+    {
+        var effect = Instantiate(effectPrefab);
+        effect.clip = popSFX;
         effect.Play();
     }
 

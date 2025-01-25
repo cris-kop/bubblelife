@@ -50,6 +50,11 @@ public class Player : MonoBehaviour
         bubbleModel.transform.localScale = Vector3.one * currentBubblePower * BubblePowerToVisualRatio;
     }
 
+    public void PopBubble()
+    {
+        FindFirstObjectByType<AudioManager>().PlayPop();
+    }
+
     public void Reset()
     {
         currentBubblePower = startBubblePower;
