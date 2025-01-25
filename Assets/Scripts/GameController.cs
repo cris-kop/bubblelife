@@ -25,17 +25,20 @@ public class GameController : MonoBehaviour
     public Text timerText;
 
     private float worldStartTime = 0;
-    public int durationInLight;
-    public int durationInDark;
-
+    public int startDurationInLight;
+    public int durationNeededInDark;
+    private float remainDurationInWorld;
+      
     public int pickupsNeeded = 3;
     public int scorePerPickup = 50;
+    public float timeAddedPerPickup = 1.0f;
     private int pickupCount = 0;
 
     public int damagePerHit = 1;
 
     public Button retryButton;
     private bool gameActive = false;
+    private int currLevel = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -69,18 +72,21 @@ public class GameController : MonoBehaviour
 
     public void SwapWorldMode()
     {
-        if(currWorldMode == worldMode.dark)
+        switch(currWorldMode)
         {
-            currWorldMode = worldMode.light;
-        }
-        else
-        {
-            currWorldMode = worldMode.dark;
+            case (worldMode.dark):
+                currWorldMode = worldMode.light;
+                break;
+            case (worldMode.light):
+                currWorldMode = worldMode.dark;
+                break;
         }
         player.GetComponent<Player>().SwitchBubbleState();
         pickupCount = 0;
 
         OnWorldModeChanged.Invoke(currWorldMode);
+
+        ++currLevel;
     }
     public worldMode GetCurrentWorld()
     {
@@ -92,6 +98,7 @@ public class GameController : MonoBehaviour
         pickupCount++;
         score = score + scorePerPickup;
         UpdateScoreText();
+        remainDurationInWorld += timeAddedPerPickup;
     }
 
     public void TakeDamage()
@@ -136,37 +143,42 @@ public class GameController : MonoBehaviour
         player.transform.position = playerStartPosition;
 
         gameActive = true;
+        currLevel = 1;
 
         worldStartTime = Time.time;
+        remainDurationInWorld = startDurationInLight;
     }
 
     void UpdateTimers()
-    { 
-        float currTime = Time.time;
-        float timeToCheck = 0.0f;
+    {
+        int currTime = (int)Time.time;
+        remainDurationInWorld -= Time.deltaTime;
 
-        int timerTextVal = (int)(currTime - worldStartTime);
+        int tDuration = (int)remainDurationInWorld;
+        timerText.text = tDuration.ToString();
 
-        if (currWorldMode == worldMode.light)
-        {
-            timeToCheck = durationInLight;
-            timerTextVal = durationInLight - timerTextVal;
-        }
-        else
-        {
-            timeToCheck = durationInDark;
-            timerTextVal = durationInDark - timerTextVal;
-        }
-        timerText.text = timerTextVal.ToString();
-
-        if (currTime - worldStartTime > timeToCheck)
+        if(remainDurationInWorld <= 0)
         {
             SwapWorldMode();
             player.GetComponent<Player>().Reset();
             player.transform.position = playerStartPosition;
 
             worldStartTime = currTime;
+
+            switch (currWorldMode)
+            {
+                case (worldMode.dark):
+                    remainDurationInWorld = durationNeededInDark;
+                    break;
+                case (worldMode.light):
+                    remainDurationInWorld = startDurationInLight;
+                    break;
+            }
         }
     }
 
+    public int GetCurrentLevel()
+    {
+        return currLevel;
+    }
 }

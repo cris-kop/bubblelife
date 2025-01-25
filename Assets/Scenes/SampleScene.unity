@@ -521,7 +521,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b9e95219ca49084684cf841e8d8c2de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollSpeed: 0.2
+  gameController: {fileID: 995136123}
+  scrollSpeedMultiplier: 0.2
+  maxScrollSpeed: 2
 --- !u!1 &464547469
 GameObject:
   m_ObjectHideFlags: 0
@@ -993,10 +995,11 @@ MonoBehaviour:
   scoreText: {fileID: 464547471}
   healthText: {fileID: 638607914}
   timerText: {fileID: 1678273058}
-  durationInLight: 5
-  durationInDark: 8
+  startDurationInLight: 5
+  durationNeededInDark: 10
   pickupsNeeded: 4
   scorePerPickup: 50
+  timeAddedPerPickup: 0.5
   damagePerHit: 1
   retryButton: {fileID: 1148178013}
 --- !u!4 &995136124
