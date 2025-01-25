@@ -68,7 +68,7 @@ Shader "ScreenTransition"
                 float fade = smoothstep(min, max, distanceFromPlayer);
                 fade = 1 - fade;
                 
-                float glowStrength = smoothstep(min, max + range, distanceFromPlayer);
+                float glowStrength = smoothstep(min, max, distanceFromPlayer);
                 glowStrength = 1 - glowStrength * 2;
                 glowStrength = abs(glowStrength);
                 glowStrength = 1 - glowStrength;
