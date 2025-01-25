@@ -67,7 +67,10 @@ public class GameController : MonoBehaviour
             if(currWorldMode == worldMode.light)
             {
                 currBubbleOverflow -= decreaseOverflow * Time.deltaTime;
-                Mathf.Clamp01(currBubbleOverflow);
+                //Mathf.Clamp01(currBubbleOverflow);
+                currBubbleOverflow = Mathf.Clamp01(currBubbleOverflow);
+
+                UpdateBubbleOverflowText();
             }
         }
     }
@@ -131,11 +134,6 @@ public class GameController : MonoBehaviour
 
                 Debug.Log("Pickups collected:" + pickupsCollected);
                 currBubbleOverflow += increaseOverflow;
-
-                // 1 * 1 * 1 = 1
-                // 1 * 1 * 2 = 2
-
-                UpdateBubbleOverflowText();
 
                 if(currBubblePower > maxBubblePower || currBubbleOverflow >= 1.0f)
                 {
