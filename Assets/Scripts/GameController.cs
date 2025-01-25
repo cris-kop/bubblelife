@@ -29,8 +29,10 @@ public class GameController : MonoBehaviour
     private float remainDurationInWorld;
     
     public float maxBubblePower = 2.0f;
-    public float bubbleOverflowControl = 1.0f;
-    private int currBubbleOverflow = 0;
+    private float currBubbleOverflow = 0.0f;
+    public float decreaseOverflow = 0.05f;
+    public float increaseOverflow = 0.2f;
+
     private float lastPickup;
     private int pickupsCollected = 0;
 
@@ -61,6 +63,12 @@ public class GameController : MonoBehaviour
         {
             CheckPlayerDied();
             UpdateTimers();
+
+            if(currWorldMode == worldMode.light)
+            {
+                currBubbleOverflow -= decreaseOverflow * Time.deltaTime;
+                Mathf.Clamp01(currBubbleOverflow);
+            }
         }
     }
 
@@ -73,6 +81,7 @@ public class GameController : MonoBehaviour
                 remainDurationInWorld = startDurationInLight;
                 bubbleOverFlowText.gameObject.SetActive(true);
                 lastPickup = 0;
+                currBubbleOverflow = 0.0f;
                 break;
             case worldMode.light:
                 currWorldMode = worldMode.dark;
@@ -121,15 +130,14 @@ public class GameController : MonoBehaviour
                 remainDurationInWorld += timeAddedPerPickup;
 
                 Debug.Log("Pickups collected:" + pickupsCollected);
-
-                currBubbleOverflow += (int)((Time.time - lastPickup) * bubbleOverflowControl * pickupsCollected);
+                currBubbleOverflow += increaseOverflow;
 
                 // 1 * 1 * 1 = 1
                 // 1 * 1 * 2 = 2
 
                 UpdateBubbleOverflowText();
 
-                if(currBubblePower > maxBubblePower || currBubbleOverflow >= 100)
+                if(currBubblePower > maxBubblePower || currBubbleOverflow >= 1.0f)
                 {
                     remainDurationInWorld = 0.0f;
                 }
@@ -155,7 +163,7 @@ public class GameController : MonoBehaviour
 
     public void UpdateBubbleOverflowText()
     {
-        bubbleOverFlowText.text = "Overflow: " + currBubbleOverflow + "%";
+        bubbleOverFlowText.text = "Overflow: " + (int)(currBubbleOverflow * 100) + "%";
     }
 
     private void CheckPlayerDied()

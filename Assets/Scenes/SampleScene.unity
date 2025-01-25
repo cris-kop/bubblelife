@@ -896,7 +896,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startGameButton: {fileID: 1148178013}
-  player: {fileID: 1823170453}
+  player: {fileID: 1823170456}
   playerStartPosition: {x: 0, y: 1, z: 0}
   startHealth: 3
   scoreText: {fileID: 464547471}
@@ -906,7 +906,8 @@ MonoBehaviour:
   startDurationInLight: 15
   durationNeededInDark: 10
   maxBubblePower: 4
-  bubbleOverflowControl: 0.2
+  decreaseOverflow: 0.05
+  increaseOverflow: 0.27
   scorePerPickup: 50
   timeAddedPerPickup: 0.5
   damagePerHit: 1
@@ -1578,6 +1579,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  accel: 15
+  drag: 7
   gameController: {fileID: 995136123}
 --- !u!4 &1823170455
 Transform:
@@ -1730,6 +1733,7 @@ MonoBehaviour:
   effectPrefab: {fileID: 1938578924612714614, guid: a84d79e45b37e9c46af54d45492c552e, type: 3}
   hitLightWorld: {fileID: 8300000, guid: 8725390f6bf0037408af23c17365165b, type: 3}
   hitDarkWorld: {fileID: 8300000, guid: df829aed235690447a52db69c953a142, type: 3}
+  popSFX: {fileID: 8300000, guid: 66518d97f448d0349946a7e3cf66d341, type: 3}
   musicLight: {fileID: 386205765}
   musicDark: {fileID: 1758363414}
 --- !u!4 &1960297616
