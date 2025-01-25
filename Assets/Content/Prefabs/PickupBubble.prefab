@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5897348217506207216}
   - component: {fileID: 7034344491899806786}
   - component: {fileID: 6261320580739309789}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1374337345118839151}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 32023998995516176}
   - component: {fileID: 6727308230309581381}
   - component: {fileID: 6699316847999984489}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -214,7 +214,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3035440504548879867}
   - component: {fileID: 3425212962249927315}
-  - component: {fileID: 872092215056230258}
   - component: {fileID: -6307676747737780989}
   m_Layer: 0
   m_Name: PickupBubble
@@ -261,20 +260,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &872092215056230258
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4972840625236919091}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc2f6fd166044d54890c0fccf2a92f68, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  light: {fileID: 3572487527730324252}
-  dark: {fileID: 1244324276988882877}
 --- !u!114 &-6307676747737780989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,7 +281,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7384952403768911832}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Dark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
