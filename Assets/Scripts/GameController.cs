@@ -14,9 +14,7 @@ public class GameController : MonoBehaviour
 
     private worldMode currWorldMode;
     public Action<worldMode> OnWorldModeChanged;
-
-    private bool isFirstUpdate = true;
-
+    
     private int score = 0;
     private int health = 3;
     public int startHealth = 3;
@@ -40,6 +38,12 @@ public class GameController : MonoBehaviour
     private bool gameActive = false;
     private int currLevel = 0;
 
+    // Sound
+    public AudioSource musicLightWorld;
+    public AudioSource musicDarkWorld;
+    public AudioSource hitLightWorldSound;
+    public AudioSource hitDarkWorldSound;
+
     // Solve with dispatch/msg listener?
     public SpawnMachine spawnMachine;
 
@@ -52,13 +56,6 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isFirstUpdate)
-        {
-            isFirstUpdate = false;
-            currWorldMode = worldMode.dark;
-            SwapWorldMode();
-        }
-
         if (gameActive)
         {
             CheckPlayerDied();
@@ -72,9 +69,13 @@ public class GameController : MonoBehaviour
         {
             case (worldMode.dark):
                 currWorldMode = worldMode.light;
+                musicDarkWorld.Stop();
+                musicLightWorld.Play();
                 break;
             case (worldMode.light):
                 currWorldMode = worldMode.dark;
+                musicLightWorld.Stop();
+                musicDarkWorld.Play();
                 break;
         }
         player.GetComponent<Player>().SwitchBubbleState();
@@ -94,6 +95,16 @@ public class GameController : MonoBehaviour
 
         spawnMachine.DeleteObject(pObject);
         remainDurationInWorld += timeAddedPerPickup;
+
+        switch(currWorldMode)
+        {
+            case (worldMode.light):
+                hitLightWorldSound.Play();
+                break;
+            case (worldMode.dark):
+                hitDarkWorldSound.Play();
+                break;
+        }
     }
 
     public void TakeDamage()

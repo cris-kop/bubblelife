@@ -22,7 +22,6 @@ public class Pickup : MonoBehaviour
 
         if(newPos.z < gameController.levelZmin)
         {
-            //Destroy(this.gameObject);
             gameController.spawnMachine.DeleteObject(this.gameObject);
         }
         else
