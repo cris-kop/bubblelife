@@ -26,6 +26,8 @@ public class Highscores : MonoBehaviour
     public Text initials4Text;
     public Text initials5Text;
 
+    public GameObject initialsInput;
+
     public int testScoreUpdate = 0;
 
     private HighScoreData highscoreData = new();
@@ -34,7 +36,17 @@ public class Highscores : MonoBehaviour
     void Start()
     {      
         LoadHighscores();
-        UpdateHighscores(PlayerPrefs.GetInt("endscore"), "YOU");
+        //UpdateHighscores(PlayerPrefs.GetInt("endscore"), "YOU");
+
+        if(PlayerPrefs.GetInt("endscore") >= highscoreData.Highscores[4])
+        {
+            initialsInput.SetActive(true);
+        }
+        else
+        {
+            initialsInput.SetActive(false);
+        }
+
         UpdateUI();        
     }
 
@@ -42,6 +54,12 @@ public class Highscores : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void PassInitials(string initials)
+    {
+        UpdateHighscores(PlayerPrefs.GetInt("endscore"), initials.ToUpper());
+        UpdateUI();        
     }
 
     private void LoadHighscores()
