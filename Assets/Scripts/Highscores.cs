@@ -34,7 +34,7 @@ public class Highscores : MonoBehaviour
     void Start()
     {      
         LoadHighscores();
-        UpdateHighscores(testScoreUpdate, "ZZZ");
+        UpdateHighscores(PlayerPrefs.GetInt("endscore"), "YOU");
         UpdateUI();        
     }
 
@@ -54,11 +54,11 @@ public class Highscores : MonoBehaviour
         else
         {
             Debug.Log("File does not exist!");
-            highscoreData.Highscores[0] = 1000;
-            highscoreData.Highscores[1] = 750;
-            highscoreData.Highscores[2] = 500;
-            highscoreData.Highscores[3] = 250;
-            highscoreData.Highscores[4] = 100;
+            highscoreData.Highscores[0] = 1500;
+            highscoreData.Highscores[1] = 1250;
+            highscoreData.Highscores[2] = 1000;
+            highscoreData.Highscores[3] = 500;
+            highscoreData.Highscores[4] = 250;
 
             highscoreData.Initials[0] = "JSA";
             highscoreData.Initials[1] = "PAW";
@@ -72,41 +72,43 @@ public class Highscores : MonoBehaviour
     {
         int newIndex = -1;
 
-        if (score == highscoreData.Highscores[4])
-        { 
-            newIndex = 4;
-        }
-        else if(score > highscoreData.Highscores[4])
+        if (score >= highscoreData.Highscores[4])
         {
-            for(int i=4;i>=0;i--)
+            for (int i = 4; i >= 0; i--)
             {
-                if(score < highscoreData.Highscores[i])
+                if (score <= highscoreData.Highscores[i])
                 {
-                    newIndex = i+1;
+                    newIndex = i + 1;
                     break;
                 }
             }
-            if(newIndex == -1)
+
+            if(score >= highscoreData.Highscores[0])
             {
-                newIndex = 0;       // highest score
+                newIndex = 0;
+            }
+            else if(score == highscoreData.Highscores[4])
+            {
+                newIndex = 4;
+            }
+            
+            Debug.Log("New index:" + newIndex);
+
+            // highscore achieved?
+            if (newIndex != -1)
+            {
+                for (int k = 4; k > newIndex; k--)
+                {
+                    highscoreData.Highscores[k] = highscoreData.Highscores[k - 1];
+                    highscoreData.Initials[k] = highscoreData.Initials[k - 1];
+                }
+                highscoreData.Highscores[newIndex] = score;
+                highscoreData.Initials[newIndex] = initials;
+
+                var json = JsonUtility.ToJson(highscoreData);
+                File.WriteAllText(scoresPath, json);
             }
         }
-
-        Debug.Log("New index:" + newIndex);
-
-        // highscore achieved?
-     /*   if (newIndex != -1)
-        {
-            for (int k = newIndex; k<4;k++)
-            {
-                highscoreData.Highscores[k+1] = highscoreData.Highscores[k];
-                highscoreData.Initials[k+1] = highscoreData.Initials[k];
-            }
-            highscoreData.Highscores[newIndex] = score;
-            highscoreData.Initials[newIndex] = initials;
-        }*/
-        var json = JsonUtility.ToJson(highscoreData);
-        File.WriteAllText(scoresPath, json);
     }
 
     private void UpdateUI()

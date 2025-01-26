@@ -198,6 +198,7 @@ public class GameController : MonoBehaviour
         if (health <= 0)
         {
             gameActive = false;
+            PlayerPrefs.SetInt("endscore", score);
             SceneManager.LoadScene("highscores");
         }
     }

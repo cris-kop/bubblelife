@@ -874,7 +874,7 @@ MonoBehaviour:
   initials3Text: {fileID: 963023944}
   initials4Text: {fileID: 1450441517}
   initials5Text: {fileID: 1459158553}
-  testScoreUpdate: 1500
+  testScoreUpdate: 1300
 --- !u!4 &1065575511
 Transform:
   m_ObjectHideFlags: 0
