@@ -169,7 +169,6 @@ public class GameController : MonoBehaviour
         if (health <= 0)
         {
             gameActive = false;
-            retryButton.gameObject.SetActive(true);
         }
     }
     public bool IsGameActive()

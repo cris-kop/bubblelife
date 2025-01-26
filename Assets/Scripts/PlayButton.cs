@@ -7,4 +7,9 @@ public class PlayButton : MonoBehaviour
     {
         SceneManager.LoadScene("SampleScene");
     }
+
+    public void OnQuitButtonClick()
+    {
+        Application.Quit();
+    }
 }
