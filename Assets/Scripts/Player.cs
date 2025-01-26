@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
 
     public GameController gameController;
 
+    public ParticleSystem[] burstParticles;
+
     private int health;
     private float currentBubblePower;
     public float bubbleIncreaser = 0.1f;
@@ -71,6 +73,11 @@ public class Player : MonoBehaviour
         else
         {
             bubbleModel.SetActive(false);
+
+            foreach(var p in burstParticles)
+			{
+                p.Play();
+			}
         }
     }
 
