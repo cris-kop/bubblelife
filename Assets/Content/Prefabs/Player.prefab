@@ -99,7 +99,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c68794e016a15d34385a0e130cac9e73, type: 2}
+  - {fileID: 2100000, guid: 8ff9cc04d45a8d945bd5f8c625f1a9eb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -186,7 +186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startBubblePower: 1
   BubblePowerToVisualRatio: 4
-  bubbleModel: {fileID: 3937454990967417918}
+  bubbleModel: {fileID: 4417553385097024156}
   gameController: {fileID: 0}
   burstParticles:
   - {fileID: 7906211223810216372}
@@ -194,6 +194,10 @@ MonoBehaviour:
   - {fileID: 9070321852152079396}
   - {fileID: 4849454304336829567}
   bubbleIncreaser: 0.2
+  bubbleMatStable: {fileID: 2100000, guid: 19b7d432b092c714fa48fc48ecfddf14, type: 2}
+  bubbleMatWobble: {fileID: 2100000, guid: b97c9debf368ee14891060e3d140f384, type: 2}
+  bubbleMatUnstable: {fileID: 2100000, guid: adf2206f067dccc4ca8809f87317a602, type: 2}
+  bubbleMatCritical: {fileID: 2100000, guid: 971c7263019dcc14a8a6d8084371ae4b, type: 2}
 --- !u!1 &7314897908154167804
 GameObject:
   m_ObjectHideFlags: 0

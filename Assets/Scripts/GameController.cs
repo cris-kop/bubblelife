@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class GameController : MonoBehaviour
 {
@@ -71,13 +72,29 @@ public class GameController : MonoBehaviour
                 //Mathf.Clamp01(currBubbleOverflow);
                 currBubbleOverflow = Mathf.Clamp01(currBubbleOverflow);
 
+                player.SetBubbleLevel(currBubbleOverflow);
+
                 UpdateBubbleOverflowText();
             }
         }
     }
 
+    private void EnableGame()
+	{
+        gameActive = true;
+    }
+
     private void SwapWorldMode(bool initial)
     {
+        if(initial == false)
+		{
+            // pause / animate then do everything
+            gameActive = false;
+
+            // after X seconds gameActive = true;
+            Invoke(nameof(EnableGame), 1.0f);
+        }
+
         switch (currWorldMode)
         {
             case worldMode.dark:
