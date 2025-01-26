@@ -1323,7 +1323,7 @@ MonoBehaviour:
   effectPrefab: {fileID: 1938578924612714614, guid: a84d79e45b37e9c46af54d45492c552e, type: 3}
   hitLightWorld: {fileID: 8300000, guid: 8725390f6bf0037408af23c17365165b, type: 3}
   hitDarkWorld: {fileID: 8300000, guid: df829aed235690447a52db69c953a142, type: 3}
-  popSFX: {fileID: 8300000, guid: 66518d97f448d0349946a7e3cf66d341, type: 3}
+  popSFX: {fileID: 8300000, guid: c9999e93afba84e45b8107d6958d3f4d, type: 3}
   musicLight: {fileID: 386205765}
   musicDark: {fileID: 1758363414}
 --- !u!4 &1960297616

@@ -14,7 +14,6 @@ public class Simplemover_Wiggle : SimpleMover_Base
 
     protected override void Move()
     {
-        //Debug.Log("Update");
         var elapsedTime = Time.time - _startTime;
         var distance = elapsedTime * speed;
 
@@ -24,7 +23,5 @@ public class Simplemover_Wiggle : SimpleMover_Base
 
         transform.position = _startPos + _dir * distance;
         transform.position += perpendicularDir * swayAmount;
-
-        //Debug.Log(transform.position);
     }
 }

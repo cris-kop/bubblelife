@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -161,7 +162,6 @@ public class GameController : MonoBehaviour
                 UpdateScoreText();
                 remainDurationInWorld += timeAddedPerPickup;
 
-                Debug.Log("Pickups collected:" + pickupsCollected);
                 currBubbleOverflow += increaseOverflow;
 
                 if(currBubblePower > maxBubblePower || currBubbleOverflow >= 1.0f)
@@ -198,6 +198,7 @@ public class GameController : MonoBehaviour
         if (health <= 0)
         {
             gameActive = false;
+            SceneManager.LoadScene("highscores");
         }
     }
     public bool IsGameActive()

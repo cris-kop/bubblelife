@@ -55,7 +55,6 @@ public class SpawnMachine : MonoBehaviour
         spawnPos.y = spawnY;
         spawnPos.z = Random.Range(topRight.z + 1.0f, topRight.z + 3.0f);
 
-        //Debug.Log(spawnPos);
         var dir = Vector3.back;
         var diToPlayer = player.transform.position - spawnPos;
 
