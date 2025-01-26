@@ -962,8 +962,24 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 825365391196516034, guid: 77c602eb2d08c40488d05e16b9833c43, type: 3}
+      propertyPath: m_fontSize
+      value: 62.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 825365391196516034, guid: 77c602eb2d08c40488d05e16b9833c43, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1628881376082765022, guid: 77c602eb2d08c40488d05e16b9833c43, type: 3}
       propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2503459544025170110, guid: 77c602eb2d08c40488d05e16b9833c43, type: 3}
+      propertyPath: m_fontSize
+      value: 46.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2503459544025170110, guid: 77c602eb2d08c40488d05e16b9833c43, type: 3}
+      propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3138001485169700455, guid: 77c602eb2d08c40488d05e16b9833c43, type: 3}
@@ -1054,8 +1070,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8117688918604761847, guid: 77c602eb2d08c40488d05e16b9833c43, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9067579961606922912, guid: 77c602eb2d08c40488d05e16b9833c43, type: 3}
       propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9136920312156758854, guid: 77c602eb2d08c40488d05e16b9833c43, type: 3}
+      propertyPath: m_fontSize
+      value: 25.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 9136920312156758854, guid: 77c602eb2d08c40488d05e16b9833c43, type: 3}
+      propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -60,11 +60,13 @@ public class GameController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _mainMenu.SetActive(true);
-        _gameOverMenu.SetActive(false);
-        _gameplayMenu.SetActive(false);
+        //_mainMenu.SetActive(true);
+        //_gameOverMenu.SetActive(false);
+        //_gameplayMenu.SetActive(false);
 
-        _startGameButton.onClick.AddListener(StartGame);
+        //_startGameButton.onClick.AddListener(StartGame);
+
+        StartGame();
     }
 
     // Update is called once per frame
@@ -188,7 +190,7 @@ public class GameController : MonoBehaviour
 
     public void UpdateBubbleOverflowText()
     {
-        bubbleOverFlowText.text = "Overflow: " + (int)(currBubbleOverflow * 100) + "%";
+        bubbleOverFlowText.text = "Overflow:\n" + (int)(currBubbleOverflow * 100) + "%";
     }
 
     private void CheckPlayerDied()
