@@ -781,7 +781,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameController: {fileID: 995136123}
   pickupPrefab: {fileID: 4972840625236919091, guid: 42b5a9f7a1f9ce34faf01183ab6fb437, type: 3}
-  maxObjectsBase: 5
+  maxObjectsBase: 8
   minZ: 8
   maxZ: 13
   minX: -14

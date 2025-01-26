@@ -101,7 +101,7 @@ public class GameController : MonoBehaviour
             gameActive = false;
 
             // after X seconds gameActive = true;
-            Invoke(nameof(EnableGame), 1.0f);
+            Invoke(nameof(EnableGame), 0.7f);
         }
 
         switch (currWorldMode)
