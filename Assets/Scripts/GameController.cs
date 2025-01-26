@@ -181,11 +181,11 @@ public class GameController : MonoBehaviour
 
     public void UpdateScoreText()
     {
-        scoreText.text = "Score: " + score;
+        scoreText.text = "Score:\n" + score;
     }
     public void UpdateHealthText()
     {
-        healthText.text = "Health: " + health;
+        healthText.text = "Health:\n" + health;
     }
 
     public void UpdateBubbleOverflowText()
