@@ -32,4 +32,17 @@ public class SimpleMover_Base : MonoBehaviour
         gameController = GameObject.FindFirstObjectByType<GameController>();
 
     }
+
+    private void Update()
+    {
+        if (gameController.IsGameActive())
+        {
+            Move();
+        }
+    }
+
+    protected virtual void Move()
+	{
+
+	}
 }

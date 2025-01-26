@@ -8,13 +8,20 @@ public class Player : MonoBehaviour
     public float BubblePowerToVisualRatio = 4f;
 
     [Header("references")]
-    public GameObject bubbleModel;
+    public MeshRenderer bubbleModel;
 
     public GameController gameController;
+
+    public ParticleSystem[] burstParticles;
 
     private int health;
     private float currentBubblePower;
     public float bubbleIncreaser = 0.1f;
+
+    public Material bubbleMatStable;
+    public Material bubbleMatWobble;
+    public Material bubbleMatUnstable;
+    public Material bubbleMatCritical;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -62,15 +69,39 @@ public class Player : MonoBehaviour
         UpdateVisuals();
     }
 
+    public void SetBubbleLevel(float level)
+	{
+        if(level < 0.333f)
+		{
+            var progress = Mathf.Clamp01(level / 0.333f);
+            bubbleModel.material.Lerp(bubbleMatStable, bubbleMatWobble, progress);
+		}
+        else if (level < 0.666f)
+        {
+            var progress = Mathf.Clamp01((level - 0.333f) / 0.333f);
+            bubbleModel.material.Lerp(bubbleMatWobble, bubbleMatUnstable, progress);
+        }
+        else
+        {
+            var progress = Mathf.Clamp01((level - 0.666f) / 0.333f);
+            bubbleModel.material.Lerp(bubbleMatUnstable, bubbleMatCritical, progress);
+        }
+    }
+
     private void SwitchBubbleState()
     {
         if (gameController.GetCurrentWorld() == GameController.worldMode.light)
         {
-            bubbleModel.SetActive(true);
+            bubbleModel.gameObject.SetActive(true);
         }
         else
         {
-            bubbleModel.SetActive(false);
+            bubbleModel.gameObject.SetActive(false);
+
+            foreach(var p in burstParticles)
+			{
+                p.Play();
+			}
         }
     }
 

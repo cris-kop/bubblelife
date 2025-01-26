@@ -12,7 +12,7 @@ public class Simplemover_Wiggle : SimpleMover_Base
         swayProgressOffset = Random.Range(0, Mathf.PI);
     }
 
-    private void Update()
+    protected override void Move()
     {
         //Debug.Log("Update");
         var elapsedTime = Time.time - _startTime;

@@ -19,10 +19,18 @@ public class SpawnMachine : MonoBehaviour
     // List of active objects
     List<GameObject> objectsList = new List<GameObject>();
 
+    private Vector3 topRight;
+    private Vector3 topLeft;
+
+    private float nextSpawnTime = 0;
+    private Player player;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        topRight = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0));
+        topLeft = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, 0));
+        player = FindFirstObjectByType<Player>();
     }
 
     // Update is called once per frame
@@ -32,7 +40,7 @@ public class SpawnMachine : MonoBehaviour
 
         if (gameController.IsGameActive())
         {
-            if (objectsList.Count < (maxObjectsBase * gameController.GetCurrentLevel() / 2))
+            if (Time.time > nextSpawnTime && objectsList.Count < (maxObjectsBase * gameController.GetCurrentLevel() / 2))
             {
                 SpawnObject();
             }
@@ -43,19 +51,27 @@ public class SpawnMachine : MonoBehaviour
     void SpawnObject()
     {
         Vector3 spawnPos = new Vector3();
-        spawnPos.x = Random.Range(minX, maxX);
+        spawnPos.x = Random.Range(topRight.x, topLeft.x);
         spawnPos.y = spawnY;
-        spawnPos.z = Random.Range(minZ, maxZ);
+        spawnPos.z = Random.Range(topRight.z + 1.0f, topRight.z + 3.0f);
 
         //Debug.Log(spawnPos);
+        var dir = Vector3.back;
+        var diToPlayer = player.transform.position - spawnPos;
+
+        dir = Vector3.Lerp(dir, diToPlayer, Random.Range(0.5f, 0.98f));
+        dir.y = 0;
+        dir = dir.normalized;
+
         var pickup = Instantiate(pickupPrefab, spawnPos, Quaternion.identity);
         var pickupMovers = pickup.GetComponents<SimpleMover_Base>();
         foreach (var mover in pickupMovers)
         {
-            mover.Setup(spawnPos, Vector3.back);
+            mover.Setup(spawnPos, dir);
         }
 
         objectsList.Add(pickup);
+        nextSpawnTime = Time.time + Random.Range(0.5f, 1.0f);
     }
 
     // Reset the spawner

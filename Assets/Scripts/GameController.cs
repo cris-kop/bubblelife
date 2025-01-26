@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using DG.Tweening;
 
 public class GameController : MonoBehaviour
 {
@@ -9,7 +11,12 @@ public class GameController : MonoBehaviour
         light, dark
     };
 
+    public GameObject _mainMenu;
     public Button _startGameButton;
+    [Space]
+    public GameObject _gameOverMenu;
+    public GameObject _gameplayMenu;
+
     public Player player;
     public Vector3 playerStartPosition = new Vector3(0.0f, 1.0f, 0.0f);
 
@@ -19,10 +26,10 @@ public class GameController : MonoBehaviour
     private int score = 0;
     private int health = 3;
     public int startHealth = 3;
-    public Text scoreText;
-    public Text healthText;
-    public Text bubbleOverFlowText;
-    public Text timerText;
+    public TMP_Text scoreText;
+    public TMP_Text healthText;
+    public TMP_Text bubbleOverFlowText;
+    public TMP_Text timerText;
 
     public int startDurationInLight;
     public int durationNeededInDark;
@@ -53,7 +60,11 @@ public class GameController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        StartGame();
+        _mainMenu.SetActive(true);
+        _gameOverMenu.SetActive(false);
+        _gameplayMenu.SetActive(false);
+
+        _startGameButton.onClick.AddListener(StartGame);
     }
 
     // Update is called once per frame
@@ -70,13 +81,29 @@ public class GameController : MonoBehaviour
                 //Mathf.Clamp01(currBubbleOverflow);
                 currBubbleOverflow = Mathf.Clamp01(currBubbleOverflow);
 
+                player.SetBubbleLevel(currBubbleOverflow);
+
                 UpdateBubbleOverflowText();
             }
         }
     }
 
+    private void EnableGame()
+	{
+        gameActive = true;
+    }
+
     private void SwapWorldMode(bool initial)
     {
+        if(initial == false)
+		{
+            // pause / animate then do everything
+            gameActive = false;
+
+            // after X seconds gameActive = true;
+            Invoke(nameof(EnableGame), 0.7f);
+        }
+
         switch (currWorldMode)
         {
             case worldMode.dark:
@@ -178,6 +205,10 @@ public class GameController : MonoBehaviour
 
     public void StartGame()
     {
+        _mainMenu.SetActive(false);
+        _gameOverMenu.SetActive(false);
+        _gameplayMenu.SetActive(true);
+
         score = 0;
         health = startHealth;
         gameActive = true;
