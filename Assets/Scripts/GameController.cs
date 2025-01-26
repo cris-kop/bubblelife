@@ -191,6 +191,8 @@ public class GameController : MonoBehaviour
 
         currWorldMode = worldMode.dark;
         SwapWorldMode(true);
+
+        timerText.gameObject.SetActive(true);
     }
 
     void UpdateTimers()
@@ -198,7 +200,16 @@ public class GameController : MonoBehaviour
         remainDurationInWorld -= Time.deltaTime;
 
         int tDuration = (int)remainDurationInWorld;
-        timerText.text = tDuration.ToString();
+
+        switch (currWorldMode)
+        {
+            case worldMode.dark:
+                timerText.text = "Survive for " + tDuration.ToString() + " seconds";
+                break;
+            case worldMode.light:
+                timerText.text = "Chilling in my bubble for " + tDuration.ToString() + " seconds";
+                break;
+        }
 
         if (remainDurationInWorld <= 0)
         {

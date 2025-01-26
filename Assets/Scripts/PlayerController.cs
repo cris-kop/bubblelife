@@ -22,8 +22,8 @@ public class PlayerController : MonoBehaviour
         topRight = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0));
         bottomLeft = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0));
 
-        Debug.Log(topRight);
-        Debug.Log(bottomLeft);
+        //Debug.Log(topRight);
+        //Debug.Log(bottomLeft);
     }
 
     // Update is called once per frame

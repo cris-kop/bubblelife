@@ -6,7 +6,7 @@ public class SpawnMachine : MonoBehaviour
     public GameController gameController;
     public GameObject pickupPrefab;
 
-    public int maxObjects = 10;
+    public int maxObjectsBase = 10;
     // Spawning region
     public float minZ = -0.1f;
     public float maxZ = 0.1f;
@@ -15,7 +15,7 @@ public class SpawnMachine : MonoBehaviour
     public float maxX = 0.1f;
 
     public float spawnY = 2.8f;
-
+    
     // List of active objects
     List<GameObject> objectsList = new List<GameObject>();
 
@@ -29,9 +29,10 @@ public class SpawnMachine : MonoBehaviour
     void Update()
     {
         CleanUpOutsideScreen();
+
         if (gameController.IsGameActive())
         {
-            if (objectsList.Count < maxObjects)
+            if (objectsList.Count < (maxObjectsBase * gameController.GetCurrentLevel() / 2))
             {
                 SpawnObject();
             }
