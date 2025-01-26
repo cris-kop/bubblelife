@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameController : MonoBehaviour
 {
@@ -19,10 +20,10 @@ public class GameController : MonoBehaviour
     private int score = 0;
     private int health = 3;
     public int startHealth = 3;
-    public Text scoreText;
-    public Text healthText;
-    public Text bubbleOverFlowText;
-    public Text timerText;
+    public TMP_Text scoreText;
+    public TMP_Text healthText;
+    public TMP_Text bubbleOverFlowText;
+    public TMP_Text timerText;
 
     public int startDurationInLight;
     public int durationNeededInDark;
