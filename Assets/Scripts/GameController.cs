@@ -53,7 +53,7 @@ public class GameController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _startGameButton.onClick.AddListener(StartGame);
+        StartGame();
     }
 
     // Update is called once per frame
@@ -183,8 +183,6 @@ public class GameController : MonoBehaviour
         health = startHealth;
         gameActive = true;
         currLevel = 1;
-
-        retryButton.gameObject.SetActive(false);
 
         UpdateHealthText();
         UpdateScoreText();
