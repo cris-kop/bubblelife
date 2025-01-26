@@ -11,7 +11,12 @@ public class GameController : MonoBehaviour
         light, dark
     };
 
+    public GameObject _mainMenu;
     public Button _startGameButton;
+    [Space]
+    public GameObject _gameOverMenu;
+    public GameObject _gameplayMenu;
+
     public Player player;
     public Vector3 playerStartPosition = new Vector3(0.0f, 1.0f, 0.0f);
 
@@ -55,7 +60,11 @@ public class GameController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        StartGame();
+        _mainMenu.SetActive(true);
+        _gameOverMenu.SetActive(false);
+        _gameplayMenu.SetActive(false);
+
+        _startGameButton.onClick.AddListener(StartGame);
     }
 
     // Update is called once per frame
@@ -197,6 +206,10 @@ public class GameController : MonoBehaviour
 
     public void StartGame()
     {
+        _mainMenu.SetActive(false);
+        _gameOverMenu.SetActive(false);
+        _gameplayMenu.SetActive(true);
+
         score = 0;
         health = startHealth;
         gameActive = true;
