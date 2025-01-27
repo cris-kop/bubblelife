@@ -27,10 +27,12 @@ public class Highscores : MonoBehaviour
     public Text initials5Text;
 
     public GameObject initialsInput;
+    public GameObject continueButton;
 
     public int testScoreUpdate = 0;
 
     private HighScoreData highscoreData = new();
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -41,25 +43,28 @@ public class Highscores : MonoBehaviour
         if(PlayerPrefs.GetInt("endscore") >= highscoreData.Highscores[4])
         {
             initialsInput.SetActive(true);
+            initialsInput.GetComponent<InputField>().Select();
+            continueButton.SetActive(false);
         }
         else
         {
             initialsInput.SetActive(false);
+            continueButton.SetActive(true);
         }
-
         UpdateUI();        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void PassInitials(string initials)
     {
         UpdateHighscores(PlayerPrefs.GetInt("endscore"), initials.ToUpper());
-        UpdateUI();        
+        UpdateUI();
+        continueButton.SetActive(true);
     }
 
     private void LoadHighscores()

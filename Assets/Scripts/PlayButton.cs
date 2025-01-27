@@ -18,5 +18,6 @@ public class PlayButton : MonoBehaviour
     public void OnQuitButtonClick()
     {
         Application.Quit();
+        Debug.Log("Quit now!");
     }
 }

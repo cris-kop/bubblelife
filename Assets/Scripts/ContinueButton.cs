@@ -3,13 +3,13 @@ using UnityEngine.SceneManagement;
 
 public class ContinueButton : MonoBehaviour
 {
-    /*public void Update()
+    public void Update()
     {
-        if (Input.GetButton("StartGame"))
+        if (Input.GetButtonDown("StartGame"))
         {
             OnContinueButtonClicked();
         }
-    }*/
+    }
     public void OnContinueButtonClicked()
     {
         SceneManager.LoadScene("homescreen");
